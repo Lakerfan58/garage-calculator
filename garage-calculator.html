@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carport City Metal Garage Quote Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 450px; margin: 2em auto; padding: 1.5em; background: #f4f4fa; border-radius: 18px; box-shadow: 0 2px 12px #aaa;}
+    .banner img { width: 100%; border-radius: 12px; margin-bottom: 0.7em;}
+    h2 { color: #2a4474; text-align: center; margin-bottom: 0.6em;}
+    .contact { background: #fffbe8; border-radius: 10px; padding: 0.6em 1em; margin-bottom: 1em; box-shadow: 0 1px 6px #ddd;}
+    .contact strong { color: #b85c00; }
+    .delivery { color: #0e8c20; font-weight: bold; margin-top: 0.4em;}
+    label { display: block; margin: 1em 0 0.4em;}
+    input, select { width: 100%; padding: 0.45em; border-radius: 7px; border: 1px solid #bbb; font-size: 1em;}
+    .result { background: #fff; margin-top: 1.5em; border-radius: 12px; padding: 1em; box-shadow: 0 1px 6px #ccc;}
+    .result strong { color: #247233; font-size: 1.13em;}
+    button { background: #3a6ee6; color: #fff; border: none; border-radius: 9px; padding: 0.6em 1.2em; margin-top: 1em; font-size: 1em; cursor: pointer;}
+    button:hover { background: #224399;}
+    .footnote { margin-top: 1em; font-size: 0.95em; color: #666; text-align: center;}
+  </style>
+</head>
+<body>
+  <div class="banner">
+    <img src="https://i.postimg.cc/SRK8tkhH/openart-3c527ee5920447869504e45a45adcd90-raw.png" alt="Carport City AZ Banner">
+  </div>
+  <h2>Metal Garage Quote Calculator</h2>
+  <div class="contact">
+    <strong>Carport City</strong><br>
+    3162 West Meadowlark Lane<br>
+    Benson, AZ 85602<br>
+    <strong>Phone:</strong> <a href="tel:5203087408" style="color: #b85c00; text-decoration: none;">520-308-7408</a><br>
+    <em>Stop by to see our demo buildings!</em>
+    <div class="delivery">FREE Delivery Statewide in Arizona!</div>
+  </div>
+  <form id="quoteForm" autocomplete="off">
+    <label>Garage Size:</label>
+    <select id="size">
+      <option value="20x30x10">20x30x10</option>
+    </select>
+    <label>Number of 10x8 Roll-Up Doors:</label>
+    <input type="number" id="doors" value="2" min="0">
+    <label>Number of 24x30 Windows:</label>
+    <input type="number" id="windows" value="6" min="0">
+    <button type="button" onclick="calculateQuote()">Get Quote</button>
+  </form>
+  <div class="result" id="result" style="display:none;"></div>
+  <div class="footnote">
+    <strong>FREE delivery anywhere in Arizona!</strong><br>
+    For custom sizes/options, call or visit Carport City.<br>
+    Tax rate: 6.10%
+  </div>
+  <script>
+    // Price constants
+    const basePrice = 3855; // 20x30 14 GA
+    const legUpgrade = 660; // 10' leg height
+    const sidesPrice = 1175; // Closed sides, 10'
+    const endsPrice = 2330; // Closed ends, 10'
+    const doorPrice = 1100; // 10x8 roll-up
+    const headerPrice = 150; // Header per door
+    const windowPrice = 200; // 24x30 single pane
+    const anchorsPrice = 150; // Assumed 10 anchors at $15
+    const taxRate = 0.061;
+
+    function calculateQuote() {
+      const doors = parseInt(document.getElementById('doors').value) || 0;
+      const windows = parseInt(document.getElementById('windows').value) || 0;
+      let subtotal =
+        basePrice +
+        legUpgrade +
+        sidesPrice +
+        endsPrice +
+        (doors * doorPrice) +
+        (doors * headerPrice) +
+        (windows * windowPrice) +
+        anchorsPrice;
+      let tax = subtotal * taxRate;
+      let total = subtotal + tax;
+
+      document.getElementById('result').style.display = "block";
+      document.getElementById('result').innerHTML =
+        `<strong>Quote:</strong><br>
+        Subtotal: $${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}<br>
+        Sales Tax (6.10%): $${tax.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}<br>
+        <strong>Total: $${total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</strong>`;
+    }
+  </script>
+</body>
+</html>
